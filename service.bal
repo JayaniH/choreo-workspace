@@ -19,6 +19,7 @@ table<WifiPayloadRecord> key(email) wifiAccounts = table [
 
 service / on new http:Listener(9090) {
 
+    # Get the wifi accounts of a given user
     resource function get guest\-wifi\-accounts/[string ownerEmail]() returns string[] {
         string[] payload = [];
         if (!wifiAccounts.hasKey(ownerEmail)) {
@@ -33,6 +34,7 @@ service / on new http:Listener(9090) {
         return payload;
     }
 
+    # Add a new wifi account
     resource function post guest\-wifi\-accounts(@http:Payload WifiPayload wifiRecord) returns string {
 
         if !(wifiAccounts.hasKey(wifiRecord.email)) {
